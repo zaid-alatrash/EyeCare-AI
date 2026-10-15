@@ -1,0 +1,35 @@
+.reaction-stage {
+  display: grid;
+  width: 100%;
+  min-height: clamp(310px, 46vw, 440px);
+  place-items: center;
+  align-content: center;
+  gap: 14px;
+  padding: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  cursor: pointer;
+  background: var(--color-optotype-background);
+  color: var(--color-primary-900);
+  font: inherit;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.reaction-stage:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 3px; }
+.reaction-stage strong { font-size: clamp(1.15rem, 3vw, 1.55rem); }
+.reaction-stage small { color: var(--color-text-muted); }
+.reaction-pulse { width: clamp(78px, 15vw, 122px); aspect-ratio: 1; border: 2px solid var(--color-border-strong); border-radius: 50%; background: var(--color-background); }
+.reaction-stage.is-waiting { border-color: var(--color-primary-400); background: var(--color-primary-50); }
+.reaction-stage.is-ready { border-color: #16835b; background: color-mix(in srgb, #16835b 12%, var(--color-optotype-background)); }
+.reaction-stage.is-ready .reaction-pulse { border-color: #16835b; background: #16835b; box-shadow: 0 0 0 12px color-mix(in srgb, #16835b 16%, transparent); }
+.reaction-stage.is-early { border-color: #c44949; background: color-mix(in srgb, #c44949 10%, var(--color-optotype-background)); }
+.reaction-stage.is-complete .reaction-pulse { border-color: var(--color-primary-500); background: var(--color-primary-100); }
+.test-actions--center { justify-content: center; }
+.reaction-help, .reaction-trials { max-width: 760px; margin-top: 18px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-background); color: var(--color-text-muted); font-size: .86rem; }
+.reaction-help summary, .reaction-trials summary { padding: 12px 14px; cursor: pointer; color: var(--color-primary-800); font-weight: 800; }
+.reaction-help p { margin: 0; padding: 0 14px 14px; }
+.reaction-trials > div, .reaction-trials > p { padding-inline: 14px; }
+.reaction-trials h3 { margin: 0 0 8px; color: var(--color-text); font-size: .9rem; }
+.reaction-trials ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0 0 14px; list-style: none; }
+.reaction-trials li { padding: 5px 8px; border-radius: 7px; background: var(--color-primary-100); color: var(--color-primary-800); font-size: .78rem; font-weight: 750; }
+.reaction-trials > p { margin: 0 0 14px; color: var(--color-text-muted); }
+@media (prefers-reduced-motion: reduce) { .reaction-stage { transition: none; } }

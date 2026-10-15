@@ -1,0 +1,697 @@
+/* Experimental real-time camera mode */
+
+html[dir="rtl"] .realtime-camera-grid {
+  direction: ltr;
+}
+
+html[dir="rtl"] .realtime-camera-grid > * {
+  direction: rtl;
+}
+
+html[dir="rtl"] .realtime-progress li:not(:last-child) {
+  margin-right: 0;
+  margin-left: 16px;
+  padding-right: 0;
+  padding-left: 16px;
+  border-right: 0;
+  border-left: 1px solid var(--color-border);
+}
+
+.realtime-panel {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+.realtime-panel[hidden],
+.realtime-camera-shell[hidden],
+.realtime-setup[hidden],
+[data-rt-stage][hidden] {
+  display: none;
+}
+
+.realtime-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  padding: clamp(24px, 4vw, 40px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.realtime-header .eyebrow {
+  margin: 12px 0 5px;
+}
+
+.realtime-header h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 4vw, 2.65rem);
+}
+
+.realtime-header h2:focus { outline: none; }
+
+.realtime-header p:last-child {
+  max-width: 690px;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.realtime-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border: 1px solid var(--color-warning-border);
+  border-radius: 999px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.realtime-close {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--color-input);
+  color: var(--color-primary-900);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.realtime-close:hover,
+.realtime-close:focus-visible {
+  border-color: var(--color-primary-600);
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.realtime-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px clamp(24px, 4vw, 40px) 0;
+  padding: 13px 15px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 10px;
+  background: var(--color-primary-50);
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.realtime-alert strong {
+  color: var(--color-primary-900);
+  white-space: nowrap;
+}
+
+.realtime-alert.is-error {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.realtime-progress {
+  display: grid;
+  margin: 0;
+  padding: 18px clamp(24px, 4vw, 40px) 0;
+  list-style: none;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.realtime-progress li {
+  display: grid;
+  align-items: center;
+  gap: 3px 9px;
+  color: var(--color-text-soft);
+  grid-template-columns: 28px 1fr;
+}
+
+.realtime-progress li:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+  margin-right: 16px;
+  padding-right: 16px;
+}
+
+.realtime-progress span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  grid-row: 1 / 3;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.realtime-progress strong { font-size: 0.78rem; }
+.realtime-progress small { font-size: 0.62rem; }
+.realtime-progress .is-active,
+.realtime-progress .is-complete { color: var(--color-primary-800); }
+.realtime-progress .is-active span {
+  border-color: var(--color-action-background);
+  background: var(--color-action-background);
+  color: var(--color-action-text);
+}
+.realtime-progress .is-complete span { background: var(--color-primary-100); }
+
+.realtime-setup,
+.realtime-camera-shell {
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.realtime-setup > h3,
+.realtime-workflow h3 {
+  margin: 0 0 8px;
+  color: var(--color-primary-900);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.realtime-setup > p,
+.realtime-workflow section > p:not(.eyebrow):not(.transition-result) {
+  max-width: 760px;
+  color: var(--color-text-muted);
+}
+
+.realtime-card-stage {
+  display: grid;
+  min-height: 270px;
+  place-items: center;
+  margin-top: 22px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background-color: var(--color-input);
+  background-image: linear-gradient(var(--color-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.realtime-requirements {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.realtime-requirements div {
+  padding: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-background);
+}
+
+.realtime-requirements strong,
+.realtime-requirements span {
+  display: block;
+}
+
+.realtime-requirements strong {
+  margin-bottom: 4px;
+  color: var(--color-primary-900);
+  font-size: 0.8rem;
+}
+
+.realtime-requirements span,
+.realtime-secure-note {
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+}
+
+.realtime-secure-note {
+  margin: 14px 0 0;
+}
+
+.realtime-camera-grid {
+  display: grid;
+  align-items: start;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1.7fr) minmax(230px, 0.8fr);
+}
+
+.camera-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #07151c;
+}
+
+.camera-frame video,
+.camera-frame canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.camera-frame canvas {
+  pointer-events: none;
+}
+
+.camera-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 7px;
+  padding: 20px;
+  background: rgb(7 21 28 / 88%);
+  color: #eefcff;
+  text-align: center;
+}
+
+.camera-loading[hidden] {
+  display: none;
+}
+
+.camera-loading small {
+  color: #b7cbd1;
+}
+
+.camera-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgb(255 255 255 / 24%);
+  border-top-color: #6ed4d0;
+  border-radius: 50%;
+  animation: camera-spin 0.8s linear infinite;
+}
+
+@keyframes camera-spin { to { transform: rotate(360deg); } }
+
+.camera-privacy-chip {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgb(3 17 23 / 76%);
+  color: #d9f7f5;
+  font-size: 0.64rem;
+  font-weight: 750;
+}
+
+.camera-controls,
+.realtime-stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.camera-controls [hidden] { display: none; }
+
+.camera-controls .button {
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 0.76rem;
+}
+
+.realtime-diagnostics {
+  display: grid;
+  gap: 10px;
+}
+
+.diagnostic-card {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: var(--color-background);
+}
+
+.diagnostic-card > span,
+.diagnostic-card > strong,
+.diagnostic-card > small {
+  display: block;
+}
+
+.diagnostic-card > span {
+  margin-bottom: 5px;
+  color: var(--color-text-soft);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.diagnostic-card > strong {
+  color: var(--color-primary-900);
+  font-size: 0.93rem;
+}
+
+.diagnostic-card > small {
+  min-height: 2.8em;
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.confidence-track {
+  height: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-border);
+}
+
+.confidence-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary-600);
+  transition: width 180ms ease;
+}
+
+.gesture-directions {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.gesture-directions span {
+  display: grid;
+  height: 27px;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-soft);
+}
+
+.gesture-directions span.is-active {
+  border-color: var(--color-primary-600);
+  background: var(--color-primary-100);
+  color: var(--color-primary-800);
+}
+
+.realtime-workflow {
+  position: relative;
+  margin-top: 24px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-background);
+}
+
+.realtime-automation {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-900);
+  text-align: center;
+}
+
+.realtime-automation[hidden] { display: none; }
+
+.realtime-automation > strong {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  line-height: 1;
+}
+
+.realtime-automation > span {
+  font-size: clamp(0.86rem, 1.4vw, 1.05rem);
+  font-weight: 750;
+}
+
+.realtime-hold-track {
+  width: min(260px, 80%);
+  height: 7px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-border);
+}
+
+.realtime-hold-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary-600);
+  transition: width 90ms linear;
+}
+
+.realtime-waiting-visual {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+  margin-top: 22px;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 14px;
+  background: var(--color-optotype-background);
+}
+
+.realtime-waiting-visual span {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  place-items: center;
+  border: 3px solid var(--color-primary-600);
+  border-radius: 50%;
+  color: var(--color-primary-800);
+  font-size: 1.8rem;
+  font-weight: 850;
+}
+
+.realtime-workflow .eyebrow {
+  margin-bottom: 6px;
+}
+
+.realtime-optotype-area {
+  display: grid;
+  min-height: 390px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-optotype-background);
+}
+
+.realtime-size-warning {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-warning-border);
+  border-radius: 9px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  font-size: 0.76rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.realtime-size-warning[hidden] { display: none; }
+
+.realtime-answer-status {
+  min-height: 22px;
+  margin: 14px 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-align: center;
+}
+
+.realtime-answer-status.is-paused {
+  color: var(--color-warning-text);
+}
+
+.realtime-test-fallback {
+  display: block;
+  margin: 5px auto 0;
+}
+
+.realtime-test-fallback[hidden] {
+  display: none;
+}
+
+.realtime-direction-pad {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.realtime-direction-pad button {
+  min-height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  cursor: pointer;
+  background: var(--color-input);
+  color: var(--color-primary-900);
+  font: inherit;
+  font-size: 1.1rem;
+}
+
+.realtime-direction-pad button span {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 750;
+}
+
+.realtime-direction-pad button:focus-visible,
+.realtime-direction-pad button:hover {
+  border-color: var(--color-primary-600);
+  outline: 2px solid var(--color-focus-ring);
+}
+
+.realtime-direction-pad button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+/* During examination the camera and optotype remain visible together. */
+.realtime-panel[data-rt-phase="examination"] .realtime-camera-shell {
+  display: grid;
+  align-items: start;
+  gap: 20px;
+  grid-template-columns: minmax(340px, 0.92fr) minmax(390px, 1.08fr);
+}
+
+.realtime-panel[data-rt-phase="examination"] .realtime-camera-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+.realtime-panel[data-rt-phase="examination"] .realtime-workflow {
+  margin-top: 0;
+}
+
+.realtime-panel[data-rt-phase="examination"] .realtime-diagnostics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.realtime-panel[data-rt-phase="examination"] .diagnostic-card--system {
+  display: none;
+}
+
+.realtime-panel[data-rt-phase="examination"] .diagnostic-card > strong {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.realtime-panel[data-rt-phase="examination"] .diagnostic-card > small {
+  font-size: 0.78rem;
+}
+
+.realtime-panel[data-rt-phase="results"] .realtime-camera-grid {
+  display: none;
+}
+
+.realtime-panel[data-rt-phase="results"] .realtime-workflow {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+@media (max-width: 940px) {
+  .realtime-panel[data-rt-phase="examination"] .realtime-camera-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .realtime-camera-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .realtime-diagnostics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .realtime-requirements {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .realtime-header {
+    flex-direction: column-reverse;
+  }
+
+  .realtime-close {
+    align-self: flex-end;
+  }
+
+  .realtime-alert {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .realtime-progress {
+    padding-inline: 18px;
+  }
+
+  .realtime-progress li:not(:last-child) {
+    margin-right: 7px;
+    padding-right: 7px;
+  }
+
+  .realtime-progress strong { font-size: 0.67rem; }
+  .realtime-progress small { display: none; }
+
+  .realtime-card-stage {
+    min-height: 220px;
+    padding: 14px;
+  }
+
+  .realtime-diagnostics {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostic-card > small {
+    min-height: 0;
+  }
+
+  .camera-controls,
+  .realtime-stage-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .camera-controls .button,
+  .realtime-stage-actions .button,
+  .realtime-stage-actions .text-button {
+    width: 100%;
+  }
+
+  .realtime-optotype-area {
+    min-height: 250px;
+  }
+
+  .realtime-direction-pad {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camera-spinner { animation-duration: 1.6s; }
+  .confidence-track span { transition: none; }
+}
+
+html[dir="rtl"] .realtime-camera-shell,
+html[dir="rtl"] .realtime-camera-grid { direction: ltr; }
+html[dir="rtl"] .realtime-camera-shell > *,
+html[dir="rtl"] .realtime-camera-grid > * { direction: rtl; }
+html[dir="rtl"] .realtime-progress li:not(:last-child) {
+  margin-right: 0;
+  margin-left: 16px;
+  padding-right: 0;
+  padding-left: 16px;
+  border-right: 0;
+  border-left: 1px solid var(--color-border);
+}

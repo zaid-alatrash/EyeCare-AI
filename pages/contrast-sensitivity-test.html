@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="اختبار تعليمي لحساسية التباين داخل المتصفح.">
+    <title>اختبار حساسية التباين | EyeCare AI</title>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/interactive-test.css">
+    <link rel="stylesheet" href="../css/contrast-sensitivity.css">
+    <link rel="stylesheet" href="../css/exam-tools.css">
+    <script src="../js/main.js" defer></script>
+    <script src="../js/history-storage.js" defer></script>
+    <script src="../js/report.js" defer></script>
+    <script src="../js/exam-tools.js" defer></script>
+    <script src="../js/contrast-sensitivity.js" defer></script>
+  </head>
+  <body class="page-shell" id="top">
+    <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+    <header class="site-header" data-header><div class="container navbar">
+      <a class="brand" href="../index.html" aria-label="الصفحة الرئيسية لـ EyeCare AI"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3.5 16s4.7-7.5 12.5-7.5S28.5 16 28.5 16 23.8 23.5 16 23.5 3.5 16 3.5 16Z"></path><circle cx="16" cy="16" r="4.25"></circle><path d="M16 11.75v8.5M11.75 16h8.5"></path></svg></span><span>EyeCare <strong>AI</strong></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="فتح قائمة التنقل" data-nav-toggle><span></span><span></span><span></span></button>
+      <nav class="primary-nav" id="primary-navigation" aria-label="التنقل الرئيسي" data-nav><a href="../index.html">الرئيسية</a><a href="../index.html#examinations">الفحوصات</a><a class="is-active" href="../index.html#clinic-services">خدمات العيادة</a><a href="../index.html#about">عن المشروع</a><a href="history.html">السجل</a></nav>
+    </div></header>
+    <main id="main-content">
+      <section class="interactive-hero" aria-labelledby="page-title"><div class="container">
+        <nav class="breadcrumb" aria-label="مسار الصفحة"><a href="../index.html">الرئيسية</a><span>/</span><a href="../index.html#clinic-services">خدمات العيادة</a><span>/</span><span aria-current="page">حساسية التباين</span></nav>
+        <p class="eyebrow">Contrast Sensitivity</p><h1 id="page-title">اختبار حساسية التباين</h1><p>تعرّف على اتجاه حرف E مع انخفاض التباين تدريجيًا.</p>
+      </div></section>
+      <section class="interactive-workspace"><div class="container interactive-layout" data-contrast-test>
+        <ol class="test-progress" aria-label="مراحل الاختبار"><li class="is-active" data-progress="setup"><span>1</span>الإعداد</li><li data-progress="test"><span>2</span>الاختبار</li><li data-progress="results"><span>3</span>النتيجة</li><li data-progress="review"><span>4</span>المراجعة</li></ol>
+        <div class="test-panel">
+          <section class="test-step" data-step="setup"><div class="test-heading"><span class="test-heading__number">01</span><div><p class="eyebrow">قبل البدء</p><h2>اضبط الشاشة</h2></div></div><p class="test-lead">استخدم سطوعًا مريحًا، وأوقف مرشحات الضوء، وانظر إلى الشاشة مباشرة.</p><p class="test-limit">تؤثر خصائص الشاشة والإضاءة في النتيجة؛ هذا الاختبار غير معاير سريريًا.</p><div class="test-actions"><a class="button button--secondary" href="../index.html#clinic-services">العودة للخدمات</a><button class="button button--primary" type="button" data-action="start">ابدأ الاختبار</button></div></section>
+          <section class="test-step" data-step="test" hidden><div class="test-question"><p class="eyebrow" data-counter>المستوى 1 من 6</p><h2>إلى أي اتجاه يشير حرف E؟</h2><p>اختر اتجاه الفتحة حتى إن كان الرمز باهتًا.</p></div><div class="test-stage"><div class="contrast-e" data-symbol data-direction="right">E</div></div><div class="choice-grid" aria-label="اتجاه الحرف"><button class="choice-button" data-direction="up">↑ أعلى</button><button class="choice-button" data-direction="left">← يسار</button><button class="choice-button" data-direction="down">↓ أسفل</button><button class="choice-button" data-direction="right">→ يمين</button></div></section>
+          <section class="test-step" data-step="results" hidden><div class="test-heading"><span class="test-heading__number">✓</span><div><p class="eyebrow">النتيجة</p><h2>ملخص حساسية التباين</h2></div></div><div class="result-overview"><article><span>الإجابات الصحيحة</span><strong data-score>—</strong><small>من 6</small></article><article><span>أقل تباين تم تمييزه</span><strong data-lowest>—</strong><small>تقريبي</small></article><article><span>المحاولات</span><strong>6</strong><small>مستويات</small></article></div><p class="test-lead" data-interpretation></p><p class="test-status" role="status" data-status></p><div class="test-actions"><button class="button button--secondary" data-action="review">مراجعة الإجابات</button><button class="button button--secondary" data-action="save">حفظ في السجل</button><button class="button button--primary" data-action="restart">إعادة الاختبار</button></div></section>
+        </div>
+      </div></section>
+      <aside class="disclaimer"><div class="container disclaimer__content"><p><strong>فحص تعليمي:</strong> لا تمثل النتيجة قياسًا سريريًا لحساسية التباين.</p></div></aside>
+    </main>
+    <footer class="site-footer"><div class="container site-footer__inner"><a class="brand brand--footer" href="../index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3.5 16s4.7-7.5 12.5-7.5S28.5 16 28.5 16 23.8 23.5 16 23.5 3.5 16 3.5 16Z"></path><circle cx="16" cy="16" r="4.25"></circle></svg></span><span>EyeCare <strong>AI</strong></span></a><p>عيادة عيون رقمية · مشروع تخرج أكاديمي</p><p>© <span data-current-year>2026</span> EyeCare AI</p></div></footer>
+  </body>
+</html>

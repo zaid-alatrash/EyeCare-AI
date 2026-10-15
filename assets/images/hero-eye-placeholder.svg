@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="560" viewBox="0 0 720 560" role="img" aria-labelledby="title description">
+  <title id="title">Eye imaging interface placeholder</title>
+  <desc id="description">A clean abstract illustration of an eye scan and clinical interface panels.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef9fa"/>
+      <stop offset="1" stop-color="#e5f1f6"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#0e4058"/>
+      <stop offset=".35" stop-color="#14778d"/>
+      <stop offset=".72" stop-color="#42aab3"/>
+      <stop offset="1" stop-color="#bde9e7"/>
+    </radialGradient>
+  </defs>
+  <rect width="720" height="560" rx="24" fill="url(#bg)"/>
+  <path d="M48 78h164M48 106h105" stroke="#b9d8df" stroke-width="10" stroke-linecap="round"/>
+  <rect x="48" y="153" width="120" height="12" rx="6" fill="#c9e2e7"/>
+  <rect x="48" y="180" width="160" height="10" rx="5" fill="#d5e8eb"/>
+  <rect x="48" y="207" width="135" height="10" rx="5" fill="#d5e8eb"/>
+  <rect x="48" y="234" width="148" height="10" rx="5" fill="#d5e8eb"/>
+  <path d="M246 283s79-128 215-128 215 128 215 128-79 128-215 128-215-128-215-128Z" fill="#fff" stroke="#8fc7ce" stroke-width="5"/>
+  <circle cx="461" cy="283" r="91" fill="url(#iris)"/>
+  <circle cx="461" cy="283" r="37" fill="#0d3447"/>
+  <circle cx="488" cy="250" r="13" fill="#fff" opacity=".82"/>
+  <circle cx="461" cy="283" r="114" fill="none" stroke="#65b2ba" stroke-dasharray="7 9" stroke-width="2"/>
+  <path d="M461 138v39M461 389v39M316 283h39M567 283h39" stroke="#16879a" stroke-width="3" stroke-linecap="round"/>
+  <rect x="48" y="448" width="176" height="66" rx="13" fill="#fff" stroke="#c8dfe4"/>
+  <path d="M70 490l24-21 21 13 29-24 31 27 26-18" fill="none" stroke="#2497a6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="201" cy="467" r="5" fill="#2497a6"/>
+  <path d="M634 49v46M611 72h46" stroke="#5aafb8" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="634" cy="72" r="34" fill="none" stroke="#b4d8dc"/>
+</svg>

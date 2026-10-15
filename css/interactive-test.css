@@ -1,0 +1,50 @@
+.interactive-hero {
+  padding-block: clamp(40px, 5vw, 64px);
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(100deg, var(--color-hero-start), var(--color-hero-end));
+}
+.interactive-hero h1 { max-width: none; margin-bottom: 12px; font-size: clamp(2.05rem, 4vw, 3.2rem); }
+.interactive-hero .container > p:last-child { max-width: 720px; margin: 0; color: var(--color-text-muted); }
+.interactive-workspace { min-height: 640px; padding-block: clamp(42px, 6vw, 74px); background: var(--color-background); }
+.interactive-layout { max-width: 980px; }
+.test-progress { display: grid; margin: 0 0 22px; padding: 0; list-style: none; grid-template-columns: repeat(4, 1fr); }
+.test-progress li { display: flex; align-items: center; gap: 8px; color: var(--color-text-soft); font-size: 0.78rem; font-weight: 750; }
+.test-progress li:not(:last-child)::after { height: 1px; margin-inline: 12px; background: var(--color-border); content: ""; flex: 1; }
+.test-progress span { display: grid; width: 28px; height: 28px; flex: 0 0 28px; place-items: center; border: 1px solid var(--color-border); border-radius: 50%; }
+.test-progress .is-active { color: var(--color-primary-800); }
+.test-progress .is-active span { border-color: var(--color-action-background); background: var(--color-action-background); color: var(--color-action-text); }
+.test-progress .is-complete { color: var(--color-primary-700); }
+.test-panel { overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-elevated); box-shadow: var(--shadow-sm); }
+.test-step { padding: clamp(24px, 5vw, 48px); }
+.test-step[hidden] { display: none; }
+.test-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+.test-heading__number { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border-radius: 11px; background: var(--color-primary-100); color: var(--color-primary-800); font-size: 0.72rem; font-weight: 850; }
+.test-heading h2 { margin: 0; font-size: clamp(1.65rem, 3vw, 2.25rem); }
+.test-heading .eyebrow { margin-bottom: 5px; }
+.test-lead { max-width: 760px; color: var(--color-text-muted); }
+.test-limit { margin: 22px 0 0; padding: 12px 15px; border-inline-start: 3px solid var(--color-primary-500); border-radius: 7px; background: var(--color-primary-50); color: var(--color-text-muted); font-size: 0.8rem; }
+.test-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 28px; }
+.test-stage { display: grid; min-height: 340px; place-items: center; padding: clamp(18px, 4vw, 36px); border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-optotype-background); color: var(--color-optotype-ink); }
+.test-question { margin-bottom: 18px; text-align: center; }
+.test-question h2 { margin-bottom: 8px; }
+.test-question p { margin: 0; color: var(--color-text-muted); }
+.choice-grid { display: grid; gap: 10px; margin-top: 22px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.choice-button { min-height: 54px; padding: 11px; border: 1px solid var(--color-border-strong); border-radius: 10px; cursor: pointer; background: var(--color-input); color: var(--color-primary-900); font: inherit; font-weight: 750; }
+.choice-button:hover, .choice-button:focus-visible { border-color: var(--color-primary-600); outline: 3px solid var(--color-focus-ring); background: var(--color-primary-50); }
+.result-overview { display: grid; gap: 12px; margin-block: 22px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.result-overview article { padding: 18px; border: 1px solid var(--color-border); border-radius: 11px; background: var(--color-background); }
+.result-overview span, .result-overview small { display: block; color: var(--color-text-muted); font-size: 0.74rem; }
+.result-overview strong { display: block; margin: 4px 0; color: var(--color-primary-900); font-size: 1.45rem; }
+.test-status { min-height: 22px; margin: 12px 0 0; color: var(--color-primary-700); font-size: 0.8rem; font-weight: 700; }
+@media (max-width: 700px) {
+  .test-progress { gap: 8px; grid-template-columns: repeat(4, auto); }
+  .test-progress li { display: grid; justify-items: center; gap: 3px; text-align: center; }
+  .test-progress li::after { display: none; }
+  .choice-grid { grid-template-columns: repeat(2, 1fr); }
+  .result-overview { grid-template-columns: 1fr; }
+}
+@media (max-width: 460px) {
+  .test-progress li { font-size: 0.68rem; }
+  .test-actions { display: grid; }
+  .test-actions .button { width: 100%; }
+}

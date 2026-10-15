@@ -1,0 +1,36 @@
+.camera-test { max-width: 1120px; }
+.mode-tabs { display: flex; gap: 8px; margin-bottom: 18px; padding: 5px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-surface-elevated); }
+.mode-tabs button { flex: 1; min-height: 46px; border: 0; border-radius: 8px; cursor: pointer; background: transparent; color: var(--color-text-muted); font: inherit; font-weight: 800; }
+.mode-tabs button[aria-selected="true"] { background: var(--color-primary-100); color: var(--color-primary-800); }
+.camera-layout { display: grid; align-items: start; gap: 20px; grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr); }
+.camera-workspace, .mode-panel { padding: clamp(18px, 3vw, 28px); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-elevated); box-shadow: var(--shadow-sm); }
+.camera-preview { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border-radius: 14px; background: #071b29; }
+.camera-preview video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.camera-placeholder { position: absolute; inset: 0; display: grid; place-content: center; gap: 6px; padding: 24px; color: #e7f5fb; text-align: center; }
+.camera-placeholder span { color: #b7ccd6; font-size: .82rem; }
+.camera-privacy { position: absolute; right: 12px; bottom: 12px; padding: 5px 8px; border-radius: 999px; background: rgba(3, 21, 31, .76); color: #fff; font-size: .68rem; }
+.camera-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.camera-status { min-height: 24px; margin: 12px 0 0; color: var(--color-text-muted); font-size: .8rem; }
+.camera-status.is-error { color: var(--color-danger); }
+.camera-diagnostics { display: grid; gap: 7px; margin: 14px 0 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.camera-diagnostics div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 9px; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-background); font-size: .74rem; }
+.camera-diagnostics dt { color: var(--color-text-muted); }
+.camera-diagnostics dd { margin: 0; color: var(--color-primary-800); font-weight: 800; }
+.camera-diagnostics dd.is-warning { color: var(--color-warning-text); }
+.camera-diagnostics dd.is-error { color: var(--color-danger); }
+.mode-panel h2 { margin-bottom: 10px; }
+.mode-panel > p:not(.eyebrow, .test-limit) { color: var(--color-text-muted); }
+.tracking-field { position: relative; overflow: hidden; min-height: 300px; margin-top: 18px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-optotype-background); }
+.tracking-target { position: absolute; top: 50%; left: 50%; width: 34px; aspect-ratio: 1; border: 6px solid var(--color-primary-700); border-radius: 50%; background: var(--color-primary-100); transform: translate(-50%, -50%); transition: top 280ms ease, left 280ms ease; }
+.tracking-message { position: absolute; right: 14px; bottom: 12px; left: 14px; color: var(--color-text-muted); font-size: .78rem; text-align: center; }
+.camera-results, .blink-live { display: grid; gap: 10px; margin-top: 18px; grid-template-columns: repeat(3, 1fr); }
+.blink-live { grid-template-columns: repeat(2, 1fr); }
+.camera-results article, .blink-live article { padding: 14px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-background); }
+.camera-results span, .blink-live span { display: block; color: var(--color-text-muted); font-size: .72rem; }
+.camera-results strong, .blink-live strong { display: block; margin-top: 4px; color: var(--color-primary-900); font-size: 1.3rem; }
+.duration-options { display: flex; gap: 18px; margin-top: 18px; padding: 14px; border: 1px solid var(--color-border); border-radius: 10px; }
+.duration-options legend { padding-inline: 6px; color: var(--color-primary-900); font-weight: 800; }
+.duration-options label { color: var(--color-text-muted); }
+@media (max-width: 860px) { .camera-layout { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .camera-controls { display: grid; grid-template-columns: 1fr 1fr; } .camera-controls .button { width: 100%; } .camera-results, .camera-diagnostics { grid-template-columns: 1fr; } .tracking-field { min-height: 260px; } }
+@media (prefers-reduced-motion: reduce) { .tracking-target { transition: none; } }

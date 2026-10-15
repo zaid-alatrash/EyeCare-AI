@@ -1,0 +1,162 @@
+/* Shared printable report layout */
+
+.report-document {
+  display: none;
+  background: #fff;
+  color: #182b34;
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color-scheme: light !important;
+  }
+
+  body.report-print-active > *:not(.report-document) {
+    display: none !important;
+  }
+
+  body.report-print-active .report-document {
+    display: block !important;
+    max-width: none;
+    margin: 0;
+    color: #182b34;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .report-header {
+    padding-bottom: 9mm;
+    border-bottom: 2px solid #183f50;
+  }
+
+  .report-brand {
+    margin: 0 0 4mm;
+    color: #126c88;
+    font-size: 13pt;
+    font-weight: 700;
+  }
+
+  .report-header h1 {
+    margin: 0 0 2mm;
+    color: #132f3d;
+    font-size: 24pt;
+    letter-spacing: -0.02em;
+  }
+
+  .report-subtitle {
+    margin: 0;
+    color: #526973;
+  }
+
+  .report-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10mm;
+    margin: 8mm 0;
+    padding: 4mm 0;
+    border-bottom: 1px solid #ccd7dc;
+    color: #526973;
+  }
+
+  .report-meta strong {
+    color: #182b34;
+  }
+
+  .report-summary {
+    margin-bottom: 8mm;
+    padding: 7mm;
+    border: 1px solid #aebfc6;
+    background: #f5f8f9 !important;
+    break-inside: avoid;
+  }
+
+  .report-label {
+    margin: 0 0 2mm;
+    color: #526973;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .report-summary h2 {
+    margin: 0;
+    color: #132f3d;
+    font-size: 16pt;
+  }
+
+  .report-details,
+  .report-explanation {
+    margin-bottom: 8mm;
+    break-inside: avoid;
+  }
+
+  .report-details h2,
+  .report-explanation h2 {
+    margin: 0 0 4mm;
+    color: #132f3d;
+    font-size: 14pt;
+  }
+
+  .report-details dl {
+    display: grid;
+    margin: 0;
+    border-top: 1px solid #ccd7dc;
+    grid-template-columns: 62mm 1fr;
+  }
+
+  .report-details dt,
+  .report-details dd {
+    margin: 0;
+    padding: 3.5mm 0;
+    border-bottom: 1px solid #ccd7dc;
+  }
+
+  .report-details dt {
+    color: #526973;
+    font-weight: 700;
+  }
+
+  .report-details dd {
+    color: #182b34;
+  }
+
+  .report-explanation p {
+    margin: 0;
+  }
+
+  .report-disclaimer {
+    margin-top: 10mm;
+    padding: 5mm;
+    border: 1px solid #9b8a61;
+    break-inside: avoid;
+  }
+
+  .report-disclaimer strong {
+    display: block;
+    margin-bottom: 1mm;
+  }
+
+  .report-disclaimer p {
+    margin: 0;
+  }
+
+  .report-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14mm;
+    padding-top: 4mm;
+    border-top: 1px solid #ccd7dc;
+    color: #526973;
+    font-size: 9pt;
+  }
+}

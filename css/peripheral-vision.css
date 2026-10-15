@@ -1,0 +1,53 @@
+.peripheral-stage,
+.peripheral-result-map {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(330px, 50vw, 500px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-optotype-background);
+}
+
+.fixation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #082f49;
+  font-size: 2.35rem;
+  font-weight: 850;
+  text-shadow: 0 1px 0 #ffffff;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+
+[data-theme="dark"] .fixation,
+html[data-theme="dark"] .fixation { color: #082f49; }
+
+.peripheral-target,
+.map-target {
+  position: absolute;
+  width: clamp(16px, 2.2vw, 23px);
+  height: clamp(16px, 2.2vw, 23px);
+  border-radius: 50%;
+  background: var(--color-primary-700);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-primary-500) 16%, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.peripheral-target.is-visible { animation: target-pulse 220ms ease-out both; }
+.peripheral-countdown { position: absolute; top: 62%; left: 50%; color: var(--color-primary-800); font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 850; transform: translate(-50%, -50%); }
+.peripheral-countdown[hidden] { display: none; }
+.test-actions--center { justify-content: center; }
+.response-button { min-width: min(100%, 260px); }
+.key-hint { margin-inline-start: 8px; padding: 2px 7px; border: 1px solid currentColor; border-radius: 5px; font-size: 0.68rem; opacity: 0.75; }
+.peripheral-result-map { min-height: 280px; margin-block: 20px; }
+.map-target { width: 18px; height: 18px; box-shadow: none; }
+.map-target.is-detected { background: var(--color-success, #16835b); }
+.map-target.is-missed { background: var(--color-danger, #c44949); }
+.map-legend { display: flex; flex-wrap: wrap; gap: 16px; margin: -8px 0 20px; color: var(--color-text-muted); font-size: 0.76rem; }
+.map-legend span::before { display: inline-block; width: 9px; height: 9px; margin-inline-end: 6px; border-radius: 50%; background: var(--legend-color); content: ""; }
+
+@keyframes target-pulse { from { opacity: 0; transform: translate(-50%, -50%) scale(0.55); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+@media (prefers-reduced-motion: reduce) { .peripheral-target.is-visible { animation: none; } }
+@media (max-width: 560px) { .peripheral-stage { min-height: 360px; } .key-hint { display: none; } }

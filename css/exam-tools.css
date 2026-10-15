@@ -1,0 +1,52 @@
+.exam-dialog {
+  width: min(620px, calc(100% - 28px));
+  max-height: calc(100dvh - 28px);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+}
+
+.exam-dialog::backdrop { background: var(--color-overlay); }
+.exam-dialog__body { display: grid; gap: 20px; padding: clamp(22px, 4vw, 34px); }
+.exam-dialog h2 { margin: 0; font-size: 1.55rem; }
+.exam-dialog .eyebrow { margin-bottom: 5px; }
+.exam-field { display: grid; gap: 8px; color: var(--color-primary-900); font-size: 0.86rem; font-weight: 700; }
+.exam-field input {
+  width: 100%; min-height: 48px; padding: 10px 13px; border: 1px solid var(--color-border-strong);
+  border-radius: 9px; outline: 0; background: var(--color-input); color: var(--color-text); font: inherit;
+}
+.exam-field input:focus { border-color: var(--color-primary-600); box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.exam-field-error { min-height: 20px; margin: -12px 0 0; color: var(--color-danger); font-size: 0.78rem; }
+.exam-dialog__actions, .exam-review__nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.exam-review__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.exam-dialog__close { width: 40px; height: 40px; border: 1px solid var(--color-border); border-radius: 9px; cursor: pointer; background: var(--color-input); color: var(--color-text); font-size: 1.3rem; }
+.exam-review__summary { padding: 12px 15px; border-radius: 9px; background: var(--color-primary-50); color: var(--color-primary-800); font-size: 0.85rem; font-weight: 700; }
+.exam-review__trial { display: grid; gap: 16px; }
+.exam-review__trial-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.exam-review__trial-head span { padding: 5px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 800; }
+.exam-review__trial-head .is-correct { background: var(--color-success-background); color: var(--color-success); }
+.exam-review__trial-head .is-incorrect { background: var(--color-danger-background); color: var(--color-danger); }
+.exam-review__trial-head .is-neutral { background: var(--color-filter-background); color: var(--color-text-muted); }
+.exam-review__stimulus { display: grid; min-height: 210px; place-items: center; gap: 12px; padding: 18px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-optotype-background); color: var(--color-optotype-ink); text-align: center; }
+.exam-review__stimulus canvas { width: min(100%, 280px); border-radius: 50%; }
+.exam-review__e { color: currentColor; font: 900 8rem/1 Arial, sans-serif; }
+.exam-review__e[data-direction="up"] { transform: rotate(-90deg); }
+.exam-review__e[data-direction="down"] { transform: rotate(90deg); }
+.exam-review__e[data-direction="left"] { transform: rotate(180deg); }
+.exam-review__dial { width: 170px; aspect-ratio: 1; border-radius: 50%; background: repeating-conic-gradient(from 0deg, currentColor 0 1deg, transparent 1deg 15deg); mask: radial-gradient(circle, transparent 0 10%, #000 11% 100%); }
+.exam-review__field { position: relative; width: min(100%, 360px); aspect-ratio: 16/9; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-background); }
+.exam-review__fixation { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--color-primary-700); font-size: 1.7rem; }
+.exam-review__field i { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: var(--color-danger); transform: translate(-50%, -50%); }
+.exam-review__pulse { display: grid; width: 130px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--color-primary-100); color: var(--color-primary-800); font-weight: 850; }
+.exam-review__answers { display: grid; margin: 0; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.exam-review__answers div { padding: 12px; border: 1px solid var(--color-border); border-radius: 9px; }
+.exam-review__answers dt { color: var(--color-text-muted); font-size: 0.72rem; }
+.exam-review__answers dd { margin: 3px 0 0; color: var(--color-primary-900); font-weight: 750; }
+@media (max-width: 520px) {
+  .exam-review__answers { grid-template-columns: 1fr; }
+  .exam-dialog__actions .button, .exam-review__nav .button { width: 100%; }
+}

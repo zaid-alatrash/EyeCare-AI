@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An original browser-generated educational color-vision screening from EyeCare AI.">
+    <title>اختبار رؤية الألوان | EyeCare AI</title>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/color-vision-test.css">
+    <link rel="stylesheet" href="../css/exam-tools.css">
+    <link rel="stylesheet" href="../css/report.css">
+    <script src="../js/main.js" defer></script>
+    <script src="../js/history-storage.js" defer></script>
+    <script src="../js/report.js" defer></script>
+    <script src="../js/exam-tools.js" defer></script>
+    <script src="../js/color-vision-test.js" defer></script>
+  </head>
+  <body class="page-shell" id="top">
+    <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+
+    <header class="site-header" data-header>
+      <div class="container navbar">
+        <a class="brand" href="../index.html" aria-label="EyeCare AI home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M3.5 16s4.7-7.5 12.5-7.5S28.5 16 28.5 16 23.8 23.5 16 23.5 3.5 16 3.5 16Z"></path><circle cx="16" cy="16" r="4.25"></circle><path d="M16 11.75v8.5M11.75 16h8.5"></path></svg>
+          </span>
+          <span>EyeCare <strong>AI</strong></span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="فتح قائمة التنقل" data-nav-toggle>
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="primary-nav" id="primary-navigation" aria-label="التنقل الرئيسي" data-nav>
+          <a href="../index.html">الرئيسية</a>
+          <a href="../index.html#examinations">الفحوصات</a>
+          <a class="is-active" href="../index.html#clinic-services">خدمات العيادة</a>
+          <a href="chatbot.html">المساعد الطبي الذكي</a>
+          <a href="history.html">السجل</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="color-page-hero" aria-labelledby="color-page-title">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">الرئيسية</a><span aria-hidden="true">/</span><a href="../index.html#clinic-services">خدمات العيادة</a><span aria-hidden="true">/</span><span aria-current="page">رؤية الألوان</span>
+          </nav>
+          <p class="eyebrow">فحص تمييز الألوان</p>
+          <h1 id="color-page-title">اختبار رؤية الألوان</h1>
+          <p>اختبار تعليمي للوحات رقمية مكوّنة من نقاط ملونة.</p>
+        </div>
+      </section>
+
+      <section class="color-workspace" aria-label="Color vision screening workflow">
+        <div class="container color-layout">
+          <div class="color-progress" aria-label="Test progress">
+            <ol>
+              <li class="is-active" data-color-progress="preparation"><span>1</span>التحضير</li>
+              <li data-color-progress="screening"><span>2</span>الاختبار</li>
+              <li data-color-progress="results"><span>3</span>النتيجة</li>
+            </ol>
+            <button class="color-restart-link" type="button" data-color-restart hidden>إعادة الاختبار</button>
+          </div>
+
+          <div class="color-panel" data-color-test>
+            <section class="color-step" data-color-step="intro" aria-labelledby="color-intro-title">
+              <div class="color-step__heading">
+                <span class="color-step__icon" aria-hidden="true">01</span>
+                <div>
+                  <p class="eyebrow">قبل البدء</p>
+                  <h2 id="color-intro-title">اختبار تعليمي لرؤية الألوان</h2>
+                </div>
+              </div>
+
+              <p class="color-lead">
+                ستتعرف على أرقام داخل لوحات من نقاط ملونة. هذا اختبار تعليمي وليس اختبار Ishihara رسميًا أو تشخيصًا طبيًا.
+              </p>
+
+              <div class="color-intro-grid">
+                <article><strong>اضبط الشاشة</strong><p>السطوع ومرشحات الضوء وإضاءة الغرفة تؤثر في الألوان.</p></article>
+                <article><strong>نتيجة إرشادية</strong><p>تقيس النتيجة أداءك على لوحات المشروع فقط.</p></article>
+                <article><strong>خصوصية محلية</strong><p>تبقى الإجابات والنتيجة داخل هذا المتصفح.</p></article>
+              </div>
+
+              <div class="color-step__actions">
+                <a class="button button--secondary" href="../index.html#clinic-services">العودة للخدمات</a>
+                <button class="button button--primary" type="button" data-color-action="start">ابدأ الاختبار <span aria-hidden="true">←</span></button>
+              </div>
+            </section>
+
+            <section class="color-step" data-color-step="preparation" aria-labelledby="color-preparation-title" hidden>
+              <div class="color-step__heading">
+                <span class="color-step__icon" aria-hidden="true">02</span>
+                <div>
+                  <p class="eyebrow">إعداد الشاشة</p>
+                  <h2 id="color-preparation-title">حضّر الشاشة والغرفة</h2>
+                </div>
+              </div>
+
+              <p class="color-lead">تحقق من هذه النقاط قبل المتابعة:</p>
+              <ul class="color-preparation-list">
+                <li>استخدم سطوعًا مريحًا.</li>
+                <li>عطّل Night Light ومرشحات الضوء إن أمكن.</li>
+                <li>اجلس في إضاءة غرفة متوازنة.</li>
+                <li>انظر إلى الشاشة مباشرة.</li>
+                <li>لا تغيّر الإعدادات أثناء الأسئلة العشرة.</li>
+              </ul>
+
+              <div class="preparation-note"><strong>ثبّت إعدادات الألوان</strong><p>تغييرها بين اللوحات يقلل اتساق النتيجة.</p></div>
+              <div class="color-step__actions">
+                <button class="button button--primary" type="button" data-color-action="ready">أنا جاهز <span aria-hidden="true">←</span></button>
+              </div>
+            </section>
+
+            <section class="color-step color-screening" data-color-step="screening" aria-labelledby="color-question-title" hidden>
+              <div class="question-header">
+                <div>
+                  <p class="eyebrow" data-question-counter>السؤال 1 من 10</p>
+                  <h2 id="color-question-title">ما الرقم الذي تراه؟</h2>
+                  <p>أدخل الرقم الظاهر داخل النقاط الملونة.</p>
+                </div>
+                <div class="question-progress" aria-hidden="true"><span data-question-progress></span></div>
+              </div>
+
+              <div class="plate-frame">
+                <canvas
+                  width="640"
+                  height="640"
+                  data-color-plate
+                  role="img"
+                  aria-label="لوحة اختبار من نقاط ملونة؛ حدّد الرقم إن كان ظاهرًا."
+                >متصفحك لا يدعم لوحة الرسم المستخدمة.</canvas>
+              </div>
+
+              <form class="color-answer-form" data-color-answer-form novalidate>
+                <label for="color-number-answer">الرقم الظاهر في اللوحة</label>
+                <div class="answer-entry">
+                  <input id="color-number-answer" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" placeholder="أدخل الرقم" data-color-answer>
+                  <button class="button button--primary" type="submit" data-submit-answer>تأكيد الإجابة</button>
+                </div>
+                <button class="no-number-button" type="button" data-no-number>لا أرى رقمًا</button>
+                <p class="answer-error" role="alert" data-answer-error></p>
+              </form>
+            </section>
+
+            <section class="color-step" data-color-step="results" aria-labelledby="color-results-title" hidden>
+              <div class="color-step__heading">
+                <span class="color-step__icon color-step__icon--complete" aria-hidden="true">✓</span>
+                <div>
+                  <p class="eyebrow">نتيجة إرشادية</p>
+                  <h2 id="color-results-title">نتيجة اختبار الألوان</h2>
+                </div>
+              </div>
+
+              <div class="color-results-grid">
+                <article><span>اللوحات المجابة</span><strong data-answered-count>10</strong><small>من 10</small></article>
+                <article><span>إجابات صحيحة</span><strong data-correct-count>—</strong><small>لوحات المشروع</small></article>
+              </div>
+
+              <div class="screening-interpretation">
+                <p class="eyebrow">تفسير إرشادي</p>
+                <h3 data-interpretation-title>النتيجة</h3>
+                <p data-interpretation-text></p>
+              </div>
+
+              <div class="result-scope-note">
+                <strong>ماذا تعني النتيجة؟</strong>
+                <p>تقيس الأداء في هذا الاختبار التعليمي فقط ولا تشخّص عمى الألوان.</p>
+              </div>
+
+              <p class="color-result-status" role="status" aria-live="polite" data-color-result-status></p>
+
+              <div class="color-step__actions">
+                <a class="button button--secondary" href="../index.html#clinic-services">العودة للخدمات</a>
+                <button class="button button--secondary" type="button" data-color-review>مراجعة الإجابات</button>
+                <button class="button button--secondary" type="button" data-color-save-history>حفظ في السجل</button>
+                <button class="button button--secondary" type="button" data-color-print-report>تحميل التقرير PDF</button>
+                <button class="button button--primary" type="button" data-color-action="restart">إعادة الاختبار</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <aside class="disclaimer" aria-label="Medical disclaimer">
+        <div class="container disclaimer__content">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5m0 3h.01M10.3 3.8 2.4 17.2A1.9 1.9 0 0 0 4 20h16a1.9 1.9 0 0 0 1.6-2.8L13.7 3.8a2 2 0 0 0-3.4 0Z"></path></svg>
+          <p><strong>فحص تعليمي:</strong> لا تمثل النتيجة تشخيصًا. راجع اختصاصي العيون عند وجود قلق بشأن تمييز الألوان.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <a class="brand brand--footer" href="../index.html" aria-label="EyeCare AI home">
+          <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3.5 16s4.7-7.5 12.5-7.5S28.5 16 28.5 16 23.8 23.5 16 23.5 3.5 16 3.5 16Z"></path><circle cx="16" cy="16" r="4.25"></circle></svg></span>
+          <span>EyeCare <strong>AI</strong></span>
+        </a>
+        <p>عيادة عيون رقمية · مشروع تخرج أكاديمي</p>
+        <p>© <span data-current-year>2026</span> EyeCare AI</p>
+      </div>
+    </footer>
+  </body>
+</html>

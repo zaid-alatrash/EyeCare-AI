@@ -1,0 +1,5 @@
+.contrast-e { --contrast: 1; color: rgba(16, 27, 33, var(--contrast)); font: 900 clamp(7rem, 18vw, 12rem)/1 Arial, sans-serif; transition: color 160ms ease; }
+.contrast-e[data-direction="up"] { transform: rotate(-90deg); }
+.contrast-e[data-direction="down"] { transform: rotate(90deg); }
+.contrast-e[data-direction="left"] { transform: rotate(180deg); }
+html[dir="rtl"] .contrast-e { direction: ltr; }
