@@ -908,22 +908,32 @@
     showAlert("خصوصية محلية", "تُعالج صور الكاميرا داخل المتصفح ولا يتم تسجيلها أو رفعها أو حفظها.");
   }
 
-  function openRealtime() {
+  let lastRealtimeTrigger = document.querySelector("[data-open-realtime]");
+
+  function openRealtime(trigger = null) {
+    if (trigger) lastRealtimeTrigger = trigger;
     manualViews.forEach((element) => { element.hidden = true; });
     app.hidden = false;
     requestAnimationFrame(() => updateCard(Math.min(engine.NOMINAL_CARD_WIDTH_PX, getMaximumCardWidth())));
     app.querySelector("h2")?.focus({ preventScroll: false });
+    window.dispatchEvent(new CustomEvent("eyecare:realtime-opened"));
   }
 
-  function closeRealtime() {
+  function closeRealtime({ focusTrigger = true, notify = true } = {}) {
     stopCamera(false);
     resetRealtime(false);
     app.hidden = true;
     manualViews.forEach((element) => { element.hidden = false; });
-    document.querySelector("[data-open-realtime]")?.focus();
+    if (focusTrigger) lastRealtimeTrigger?.focus();
+    if (notify) window.dispatchEvent(new CustomEvent("eyecare:realtime-closed"));
   }
 
-  document.querySelector("[data-open-realtime]")?.addEventListener("click", openRealtime);
+  document.querySelectorAll("[data-open-realtime]").forEach((button) => {
+    button.addEventListener("click", (event) => openRealtime(event.currentTarget));
+  });
+  window.addEventListener("eyecare:close-realtime", () => {
+    if (!app.hidden) closeRealtime({ focusTrigger: false, notify: false });
+  });
   app.addEventListener("click", (event) => {
     const cardAction = event.target.closest("[data-rt-card]")?.dataset.rtCard;
     if (cardAction === "decrease") updateCard(state.cardWidth - 8);

@@ -13,6 +13,7 @@ window.EyeCareHistory = (() => {
   const SCHEMA_VERSION = 1;
   const SUPPORTED_TYPES = new Set([
     "vision",
+    "letter-vision",
     "color-vision",
     "contrast-sensitivity",
     "astigmatism",

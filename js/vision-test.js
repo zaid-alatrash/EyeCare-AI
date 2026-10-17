@@ -3,6 +3,9 @@
 
   const engine = window.EyeCareVisionEngine;
   if (!engine) return;
+  const speechApi = window.EyeCareSpeechRecognition;
+  const VOICE_FEEDBACK_DELAY_MS = 1200;
+  const DIRECTION_LABELS = Object.freeze({ up: "أعلى", down: "أسفل", left: "يسار", right: "يمين" });
   const {
     CARD_WIDTH_MM,
     CARD_HEIGHT_MM,
@@ -16,7 +19,7 @@
   if (!app) return;
 
   const state = {
-    currentStep: "intro",
+    currentStep: "type-selection",
     calibrationScale: null,
     calibrationStatus: "pending",
     calibrationCardWidth: NOMINAL_CARD_WIDTH_PX,
@@ -32,6 +35,7 @@
     previousOrientation: null,
     inputLocked: false,
     trials: [],
+    answerMode: "manual",
   };
 
   const elements = {
@@ -59,12 +63,153 @@
     printReportButton: app.querySelector("[data-print-report]"),
     resultActionStatus: app.querySelector("[data-result-action-status]"),
     reviewButton: app.querySelector("[data-review-answers]"),
+    answerInstruction: app.querySelector("[data-answer-instruction]"),
+    voicePanel: app.querySelector("[data-voice-panel]"),
+    voiceToggle: app.querySelector("[data-voice-toggle]"),
+    voiceButtonLabel: app.querySelector("[data-voice-button-label]"),
+    voiceStatus: app.querySelector("[data-voice-status]"),
+    voiceLanguage: app.querySelector("[data-voice-language]"),
+    voiceManual: app.querySelector("[data-voice-manual]"),
+    voiceTranscriptRow: app.querySelector("[data-voice-transcript-row]"),
+    voiceTranscript: app.querySelector("[data-voice-transcript]"),
+    voiceDirectionRow: app.querySelector("[data-voice-direction-row]"),
+    voiceDirection: app.querySelector("[data-voice-direction]"),
+    voiceResultRow: app.querySelector("[data-voice-result-row]"),
+    voiceResult: app.querySelector("[data-voice-result]"),
+    modeSelector: document.querySelector("[data-vision-mode-selector]"),
+    modeButtons: [...document.querySelectorAll("[data-vision-mode]")],
   };
+
+  let answerSequence = 0;
+
+  function clearVoiceFeedback() {
+    elements.voiceTranscriptRow.hidden = true;
+    elements.voiceDirectionRow.hidden = true;
+    elements.voiceResultRow.hidden = true;
+    elements.voiceTranscript.textContent = "";
+    elements.voiceDirection.textContent = "";
+    elements.voiceResult.textContent = "";
+    elements.voiceResult.className = "";
+  }
+
+  function showVoiceFeedback({ transcript = "", direction = "", result = "", className = "" }) {
+    elements.voiceTranscriptRow.hidden = !transcript;
+    elements.voiceTranscript.textContent = transcript;
+    elements.voiceDirectionRow.hidden = !direction;
+    elements.voiceDirection.textContent = direction ? (DIRECTION_LABELS[direction] || direction) : "";
+    elements.voiceResultRow.hidden = !result;
+    elements.voiceResult.textContent = result;
+    elements.voiceResult.className = className;
+  }
+
+  function updateVoiceState({ name, message, transcript = "", direction = "", active = false }) {
+    if (!elements.voiceStatus) return;
+    const listening = name === "listening";
+    elements.voiceStatus.textContent = message;
+    elements.voiceStatus.classList.toggle("is-error", ["error", "unsupported"].includes(name));
+    elements.voiceToggle.classList.toggle("is-listening", active);
+    elements.voiceToggle.setAttribute("aria-pressed", String(active));
+    elements.voiceButtonLabel.textContent = active
+      ? "إيقاف الاستماع"
+      : ["error", "unrecognized"].includes(name) ? "إعادة المحاولة" : "ابدأ الاستماع";
+    elements.voiceLanguage.disabled = listening;
+
+    if (name === "listening") clearVoiceFeedback();
+    if (name === "recorded") {
+      showVoiceFeedback({ transcript, direction, result: "جارٍ التحقق من الإجابة" });
+    }
+    if (name === "unrecognized") {
+      showVoiceFeedback({
+        transcript,
+        direction: "غير مفهوم",
+        result: "لم يتم التعرف على الإجابة",
+        className: "is-unrecognized",
+      });
+    }
+    if (["error", "unsupported"].includes(name)) {
+      showVoiceFeedback({ result: "تعذر إكمال التعرف الصوتي", className: "is-error" });
+    }
+  }
+
+  function updateModeSelection(mode) {
+    elements.modeButtons.forEach((button) => {
+      const selected = button.dataset.visionMode === mode;
+      button.classList.toggle("is-active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+  }
+
+  function updateModeSwitcherVisibility(forceVisible = false) {
+    const switchableStep = ["calibration", "preparation", "testing", "transition"].includes(state.currentStep);
+    elements.modeSelector.hidden = !(forceVisible || switchableStep);
+  }
+
+  function showManualFallback() {
+    elements.voiceManual.hidden = false;
+  }
+
+  const voiceController = speechApi?.createController({
+    language: "ar-SA",
+    onState: updateVoiceState,
+    onDirection: (direction, transcript) => submitAnswer(direction, "voice", transcript),
+    onOfferManual: showManualFallback,
+  });
+
+  function setAnswerMode(mode) {
+    state.answerMode = mode === "voice" ? "voice" : "manual";
+    updateModeSelection(state.answerMode);
+    const voiceActive = state.answerMode === "voice";
+    elements.voicePanel.hidden = !voiceActive || state.currentStep !== "testing";
+    elements.answerInstruction.textContent = voiceActive
+      ? "قل اتجاه فتحة الحرف، ويمكنك استخدام الأزرار يدويًا عند الحاجة."
+      : "اختر اتجاه الفتحة، أو استخدم أسهم لوحة المفاتيح.";
+    if (!voiceActive) {
+      voiceController?.stop();
+      elements.voiceManual.hidden = true;
+      return;
+    }
+    clearVoiceFeedback();
+    if (!voiceController?.supported) {
+      updateVoiceState({ name: "unsupported", message: "المتصفح لا يدعم التعرف الصوتي" });
+      elements.voiceToggle.disabled = true;
+      showManualFallback();
+    } else {
+      elements.voiceToggle.disabled = false;
+      updateVoiceState({ name: "idle", message: "اضغط لبدء الاستماع" });
+    }
+  }
+
+  function selectMode(mode) {
+    if (mode === "camera") {
+      voiceController?.stop();
+      updateModeSelection("camera");
+      return;
+    }
+
+    const alreadySelected = elements.modeButtons.some((button) => (
+      button.dataset.visionMode === mode && button.getAttribute("aria-pressed") === "true"
+    ));
+    if (alreadySelected) {
+      if (state.currentStep === "intro") openCalibration();
+      return;
+    }
+
+    window.dispatchEvent(new CustomEvent("eyecare:close-realtime"));
+    setAnswerMode(mode);
+    if (state.currentStep === "intro") openCalibration();
+  }
+
+  function stopVoiceForManualAnswer() {
+    if (state.answerMode === "voice") {
+      voiceController?.stop({ resetAuthorization: false, message: "تم تسجيل الإجابة يدويًا" });
+      clearVoiceFeedback();
+    }
+  }
 
   const progressOrder = ["setup", "right", "left", "results"];
 
   function getProgressStep() {
-    if (["intro", "calibration", "preparation"].includes(state.currentStep)) return "setup";
+    if (["type-selection", "intro", "calibration", "preparation"].includes(state.currentStep)) return "setup";
     if (state.currentStep === "results") return "results";
     if (state.currentStep === "transition" || state.currentEye === "left") return "left";
     return "right";
@@ -88,8 +233,10 @@
       step.hidden = !isVisible;
       step.classList.toggle("is-visible", isVisible);
     });
+    elements.voicePanel.hidden = state.answerMode !== "voice" || stepName !== "testing";
+    updateModeSwitcherVisibility();
 
-    elements.restartLink.hidden = stepName === "intro";
+    elements.restartLink.hidden = ["type-selection", "intro"].includes(stepName);
     updateProgress();
 
     if (moveFocus) {
@@ -178,6 +325,10 @@
     setDirectionButtonsDisabled(false);
     showStep("testing");
     updateTestDisplay();
+    if (state.answerMode === "voice") {
+      elements.voiceToggle.disabled = !voiceController?.supported;
+      voiceController?.continueAfterQuestion();
+    }
   }
 
   function setDirectionButtonsDisabled(disabled) {
@@ -191,6 +342,7 @@
   function completeEye(result) {
     const defensibleResult = state.calibrationStatus === "completed" ? result : "unavailable";
     if (state.currentEye === "right") {
+      voiceController?.stop({ resetAuthorization: false, message: "استعد لفحص العين اليسرى" });
       state.rightEyeResult = defensibleResult;
       elements.transitionResult.textContent = formatResult(defensibleResult);
       state.currentEye = "left";
@@ -199,6 +351,7 @@
     }
 
     state.leftEyeResult = defensibleResult;
+    voiceController?.stop();
     state.completedAt = new Date().toISOString();
     state.savedRecordId = null;
     renderResults();
@@ -232,11 +385,16 @@
     state.inputLocked = false;
     setDirectionButtonsDisabled(false);
     elements.answerStatus.textContent = "";
+    if (state.answerMode === "voice") {
+      elements.voiceToggle.disabled = !voiceController?.supported;
+      voiceController?.continueAfterQuestion();
+    }
   }
 
-  function submitAnswer(direction) {
+  function submitAnswer(direction, source = "manual", transcript = "") {
     if (state.currentStep !== "testing" || state.inputLocked) return;
 
+    const submissionSequence = ++answerSequence;
     state.inputLocked = true;
     setDirectionButtonsDisabled(true);
     const isCorrect = direction === state.currentOrientation;
@@ -248,20 +406,31 @@
       userAnswer: direction,
       correctAnswer: state.currentOrientation,
       isCorrect,
+      inputMethod: source,
       stimulus: { direction: state.currentOrientation },
     });
     state.trialCount += 1;
     if (isCorrect) state.correctAnswers += 1;
     elements.answerStatus.textContent = "تم تسجيل الإجابة";
+    if (source === "voice") {
+      elements.voiceToggle.disabled = true;
+      showVoiceFeedback({
+        transcript,
+        direction,
+        result: isCorrect ? "صحيحة" : "غير صحيحة",
+        className: isCorrect ? "is-correct" : "is-incorrect",
+      });
+    }
 
     window.setTimeout(() => {
+      if (submissionSequence !== answerSequence) return;
       if (state.trialCount >= TRIALS_PER_LEVEL) {
         completeLevel();
       } else {
         updateTestDisplay();
         releaseAnswerLock();
       }
-    }, 320);
+    }, source === "voice" ? VOICE_FEEDBACK_DELAY_MS : 320);
   }
 
   function renderResults() {
@@ -286,6 +455,8 @@
     const calibrated = state.calibrationStatus === "completed";
     const rightInterpretation = interpretAcuity(state.rightEyeResult, { calibrated, eyeLabel: "العين اليمنى" });
     const leftInterpretation = interpretAcuity(state.leftEyeResult, { calibrated, eyeLabel: "العين اليسرى" });
+    const inputMethods = new Set(state.trials.map((trial) => trial.inputMethod).filter(Boolean));
+    const inputMethod = inputMethods.size === 1 ? [...inputMethods][0] : "mixed";
 
     return {
       type: "vision",
@@ -298,6 +469,7 @@
         rightEyeCode: state.rightEyeResult,
         leftEyeCode: state.leftEyeResult,
         calibration,
+        inputMethod,
         scoringRule: `النجاح في المستوى يتطلب ${REQUIRED_CORRECT} من ${TRIALS_PER_LEVEL} إجابات صحيحة، والنتيجة هي أصغر مستوى تم اجتيازه لكل عين.`,
         rightInterpretation,
         leftInterpretation,
@@ -367,8 +539,9 @@
   }
 
   function restartTest() {
+    answerSequence += 1;
     Object.assign(state, {
-      currentStep: "intro",
+      currentStep: "type-selection",
       calibrationScale: null,
       calibrationStatus: "pending",
       calibrationCardWidth: NOMINAL_CARD_WIDTH_PX,
@@ -384,20 +557,27 @@
       previousOrientation: null,
       inputLocked: false,
       trials: [],
+      answerMode: "manual",
     });
 
+    voiceController?.stop();
+    elements.voiceManual.hidden = true;
+    clearVoiceFeedback();
     elements.answerStatus.textContent = "";
     elements.resultActionStatus.textContent = "";
     elements.optotype.dataset.direction = "right";
     setDirectionButtonsDisabled(false);
-    showStep("intro");
+    updateModeSelection("manual");
+    showStep("type-selection");
   }
 
   app.addEventListener("click", (event) => {
     const action = event.target.closest("[data-action]")?.dataset.action;
     if (!action) return;
 
-    if (action === "start") openCalibration();
+    if (action === "choose-e-test") showStep("intro");
+    if (action === "start") { setAnswerMode("manual"); openCalibration(); }
+    if (action === "start-voice") { setAnswerMode("voice"); openCalibration(); }
     if (action === "skip-calibration") openPreparation(true);
     if (action === "confirm-calibration") openPreparation(false);
     if (action === "ready") beginEye("right");
@@ -420,7 +600,10 @@
   elements.printReportButton.addEventListener("click", printCurrentResult);
 
   elements.directionButtons.forEach((button) => {
-    button.addEventListener("click", () => submitAnswer(button.dataset.direction));
+    button.addEventListener("click", () => {
+      stopVoiceForManualAnswer();
+      submitAnswer(button.dataset.direction, "manual");
+    });
   });
 
   document.addEventListener("keydown", (event) => {
@@ -433,7 +616,27 @@
     const direction = keyDirections[event.key];
     if (!direction || state.currentStep !== "testing") return;
     event.preventDefault();
-    submitAnswer(direction);
+    stopVoiceForManualAnswer();
+    submitAnswer(direction, "manual");
+  });
+
+  elements.voiceToggle.addEventListener("click", () => {
+    if (voiceController?.isActive()) voiceController.stop();
+    else voiceController?.start(true);
+  });
+  elements.voiceLanguage.addEventListener("change", () => voiceController?.setLanguage(elements.voiceLanguage.value));
+  elements.voiceManual.addEventListener("click", () => setAnswerMode("manual"));
+  elements.modeButtons.forEach((button) => {
+    button.addEventListener("click", () => selectMode(button.dataset.visionMode));
+  });
+
+  window.addEventListener("eyecare:realtime-opened", () => {
+    updateModeSelection("camera");
+    updateModeSwitcherVisibility(true);
+  });
+  window.addEventListener("eyecare:realtime-closed", () => {
+    updateModeSelection(state.answerMode);
+    updateModeSwitcherVisibility();
   });
 
   window.addEventListener("resize", () => {
@@ -441,6 +644,9 @@
       updateCalibrationCard(Math.min(state.calibrationCardWidth, getMaximumCardWidth()));
     }
   });
+  window.addEventListener("pagehide", () => voiceController?.stop());
 
+  updateModeSelection("manual");
+  updateModeSwitcherVisibility();
   updateProgress();
 })();

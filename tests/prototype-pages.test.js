@@ -36,10 +36,11 @@ for (const topic of ["oct", "fundus", "conditions", "exams"]) assert.match(chatb
 assert.match(chatbot, /لا تتوفر إجابة لهذا السؤال حاليًا/);
 
 const main = fs.readFileSync(path.join(root, "js", "main.js"), "utf8");
-for (const label of ["الرئيسية", "الفحوصات", "خدمات العيادة", "بوابة المرضى والأطباء", "المساعد الطبي الذكي", "التواصل", "السجل"]) {
+for (const label of ["الرئيسية", "التحليل الذكي", "خدمات العيادة", "بوابة المرضى والأطباء", "المساعد الطبي الذكي", "التواصل", "السجل"]) {
   assert.match(main, new RegExp(label), `shared navigation must include ${label}`);
 }
 assert.match(main, /new URL\(href, root\)/);
+assert.match(main, /\["oct-examination\.html", "fundus-examination\.html"\][\s\S]*?"examinations"/);
 
 const theme = fs.readFileSync(path.join(root, "js", "theme.js"), "utf8");
 assert.match(theme, /data-theme-toggle/);

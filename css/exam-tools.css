@@ -34,6 +34,7 @@
 .exam-review__stimulus { display: grid; min-height: 210px; place-items: center; gap: 12px; padding: 18px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-optotype-background); color: var(--color-optotype-ink); text-align: center; }
 .exam-review__stimulus canvas { width: min(100%, 280px); border-radius: 50%; }
 .exam-review__e { color: currentColor; font: 900 8rem/1 Arial, sans-serif; }
+.exam-review__letter { color: currentColor; font: 800 8rem/1 Arial, sans-serif; }
 .exam-review__e[data-direction="up"] { transform: rotate(-90deg); }
 .exam-review__e[data-direction="down"] { transform: rotate(90deg); }
 .exam-review__e[data-direction="left"] { transform: rotate(180deg); }

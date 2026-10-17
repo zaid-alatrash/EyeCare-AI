@@ -231,6 +231,68 @@ html[dir="rtl"] .result-action-status {
   font-size: 0.78rem;
 }
 
+.vision-test-type-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.vision-test-type-grid article {
+  display: flex;
+  min-height: 210px;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+}
+
+.vision-test-type-grid strong { color: var(--color-primary-900); font-size: 1rem; }
+.vision-test-type-grid p { flex: 1; margin: 0; color: var(--color-text-muted); }
+
+.vision-mode-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+.vision-mode-selector[hidden] { display: none; }
+
+.vision-mode-selector > strong {
+  flex: 0 0 auto;
+  color: var(--color-primary-900);
+  font-size: 0.86rem;
+}
+
+.vision-mode-selector__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.vision-mode-button {
+  min-width: 132px;
+  min-height: 42px;
+  padding-block: 9px;
+}
+
+.vision-mode-button.is-active,
+.vision-mode-button[aria-pressed="true"] {
+  border-color: var(--color-action-background);
+  background: var(--color-action-background);
+  color: var(--color-action-text);
+}
+
 .vision-step__actions {
   display: flex;
   flex-wrap: wrap;
@@ -537,6 +599,100 @@ html[dir="rtl"] .result-action-status {
   text-align: center;
 }
 
+.voice-answer-panel {
+  display: grid;
+  max-width: 560px;
+  justify-items: center;
+  gap: 12px;
+  margin: 20px auto 6px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-background);
+}
+
+.voice-answer-panel[hidden] { display: none; }
+
+.voice-answer-panel__settings {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+}
+
+.voice-answer-panel__settings select {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-input);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.voice-microphone {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-primary-600);
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--color-primary-50);
+  color: var(--color-primary-900);
+  font: inherit;
+}
+
+.voice-microphone span { color: var(--color-primary-600); font-size: 0.82rem; }
+
+.voice-microphone.is-listening {
+  border-color: var(--color-danger);
+  background: var(--color-danger-background);
+}
+
+.voice-microphone.is-listening span { color: var(--color-danger); }
+.voice-microphone:disabled { cursor: not-allowed; opacity: 0.62; }
+
+.voice-status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.voice-status.is-error { color: var(--color-danger); }
+.voice-manual-fallback { margin-top: -4px; }
+
+.voice-feedback {
+  display: grid;
+  width: 100%;
+  gap: 7px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface-elevated);
+  text-align: start;
+}
+
+.voice-feedback p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.voice-feedback p[hidden] { display: none; }
+.voice-feedback strong { color: var(--color-primary-900); }
+.voice-feedback .is-correct { color: var(--color-success); }
+.voice-feedback .is-incorrect,
+.voice-feedback .is-unrecognized,
+.voice-feedback .is-error { color: var(--color-danger); }
+
 .direction-pad {
   display: grid;
   gap: 10px;
@@ -712,6 +868,12 @@ html[dir="rtl"] .result-action-status {
   .intro-grid {
     grid-template-columns: 1fr;
   }
+
+  .vision-test-type-grid { grid-template-columns: 1fr; }
+
+  .vision-mode-selector { align-items: stretch; flex-direction: column; gap: 10px; }
+  .vision-mode-selector__buttons { display: grid; grid-template-columns: 1fr; }
+  .vision-mode-button { width: 100%; }
 
   .test-status {
     flex-direction: column;

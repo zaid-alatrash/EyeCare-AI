@@ -17,6 +17,7 @@
     <script src="../js/report.js" defer></script>
     <script src="../js/exam-tools.js" defer></script>
     <script src="../js/vision-engine.js" defer></script>
+    <script src="../js/speech-recognition.js" defer></script>
     <script src="../js/vision-test.js" defer></script>
     <script src="../js/vision-realtime.js" defer></script>
   </head>
@@ -38,7 +39,7 @@
 
         <nav class="primary-nav" id="primary-navigation" aria-label="التنقل الرئيسي" data-nav>
           <a href="../index.html">الرئيسية</a>
-          <a href="../index.html#examinations">الفحوصات</a>
+          <a href="../index.html#examinations">التحليل الذكي</a>
           <a class="is-active" href="../index.html#clinic-services">خدمات العيادة</a>
           <a href="chatbot.html">المساعد الطبي الذكي</a>
           <a href="history.html">السجل</a>
@@ -75,8 +76,43 @@
             <p>تمنح شاشة الحاسوب أو الجهاز اللوحي قياسًا أكثر اتساقًا.</p>
           </div>
 
+          <div class="vision-mode-selector" role="group" aria-labelledby="vision-mode-title" data-vision-mode-selector hidden>
+            <strong id="vision-mode-title">تبديل طريقة الإجابة</strong>
+            <div class="vision-mode-selector__buttons">
+              <button class="button button--secondary vision-mode-button" type="button" data-open-realtime data-vision-mode="camera" aria-pressed="false">وضع الكاميرا</button>
+              <button class="button button--secondary vision-mode-button" type="button" data-vision-mode="voice" aria-pressed="false">الوضع الصوتي</button>
+              <button class="button button--secondary vision-mode-button is-active" type="button" data-vision-mode="manual" aria-pressed="true">الوضع اليدوي</button>
+            </div>
+          </div>
+
           <div class="vision-panel" data-vision-app data-manual-vision>
-            <section class="vision-step is-visible" data-step="intro" aria-labelledby="intro-title">
+            <section class="vision-step is-visible" data-step="type-selection" aria-labelledby="type-selection-title">
+              <div class="vision-step__heading">
+                <span class="vision-step__icon" aria-hidden="true">01</span>
+                <div>
+                  <p class="eyebrow">نوع فحص حدة النظر</p>
+                  <h2 id="type-selection-title">اختر طريقة التعرّف على الرمز</h2>
+                </div>
+              </div>
+              <p class="vision-lead">ينتمي الاختباران إلى خدمة حدة النظر الإرشادية، لكن طريقة الإجابة تختلف.</p>
+              <div class="vision-test-type-grid">
+                <article>
+                  <strong>اختبار اتجاه حرف E</strong>
+                  <p>حدّد اتجاه فتحة حرف E باستخدام الإجابة اليدوية أو الصوت أو الكاميرا.</p>
+                  <button class="button button--primary" type="button" data-action="choose-e-test">اختيار حرف E</button>
+                </article>
+                <article>
+                  <strong>اختبار تمييز الحروف</strong>
+                  <p>تعرّف على حرف إنجليزي يتناقص حجمه تدريجيًا، بالصوت أو لوحة المفاتيح.</p>
+                  <a class="button button--secondary" href="letter-vision-test.html">اختيار الحروف</a>
+                </article>
+              </div>
+              <div class="vision-step__actions">
+                <a class="button button--secondary" href="../index.html#clinic-services">العودة للخدمات</a>
+              </div>
+            </section>
+
+            <section class="vision-step" data-step="intro" aria-labelledby="intro-title" hidden>
               <div class="vision-step__heading">
                 <span class="vision-step__icon" aria-hidden="true">01</span>
                 <div>
@@ -95,6 +131,7 @@
               <div class="vision-step__actions">
                 <a class="button button--secondary" href="../index.html#clinic-services">العودة للخدمات</a>
                 <button class="button button--secondary" type="button" data-open-realtime>اختبار فوري بالكاميرا</button>
+                <button class="button button--secondary" type="button" data-action="start-voice">ابدأ بالصوت</button>
                 <button class="button button--primary" type="button" data-action="start">ابدأ يدويًا <span aria-hidden="true">←</span></button>
               </div>
             </section>
@@ -179,7 +216,27 @@
                 </div>
               </div>
 
-              <p class="answer-instruction">اختر اتجاه الفتحة، أو استخدم أسهم لوحة المفاتيح.</p>
+              <div class="voice-answer-panel" data-voice-panel hidden>
+                <div class="voice-answer-panel__settings">
+                  <label for="voice-language">لغة التعرف</label>
+                  <select id="voice-language" data-voice-language>
+                    <option value="ar-SA">العربية</option>
+                    <option value="en-US">English</option>
+                  </select>
+                </div>
+                <button class="voice-microphone" type="button" data-voice-toggle aria-pressed="false">
+                  <span aria-hidden="true">●</span>
+                  <strong data-voice-button-label>ابدأ الاستماع</strong>
+                </button>
+                <p class="voice-status" role="status" aria-live="polite" data-voice-status>اضغط لبدء الاستماع</p>
+                <div class="voice-feedback" data-voice-feedback aria-live="polite">
+                  <p data-voice-transcript-row hidden><span>الكلام الذي تم التعرف عليه:</span> <strong data-voice-transcript></strong></p>
+                  <p data-voice-direction-row hidden><span>الاتجاه المفهوم:</span> <strong data-voice-direction></strong></p>
+                  <p data-voice-result-row hidden><span>الإجابة:</span> <strong data-voice-result></strong></p>
+                </div>
+                <button class="text-button voice-manual-fallback" type="button" data-voice-manual hidden>استخدام الإجابة اليدوية</button>
+              </div>
+              <p class="answer-instruction" data-answer-instruction>اختر اتجاه الفتحة، أو استخدم أسهم لوحة المفاتيح.</p>
               <div class="direction-pad" aria-label="Choose the direction of the E">
                 <button type="button" data-direction="up" aria-label="اتجاه E إلى أعلى"><span aria-hidden="true">↑</span>أعلى</button>
                 <button type="button" data-direction="left" aria-label="اتجاه E إلى اليسار"><span aria-hidden="true">←</span>يسار</button>

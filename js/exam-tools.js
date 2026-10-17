@@ -178,6 +178,13 @@ window.EyeCareExamTools = (() => {
       container.appendChild(symbol);
       return;
     }
+    if (kind === "letter-vision") {
+      const letter = document.createElement("div");
+      letter.className = "exam-review__letter";
+      letter.textContent = stimulus.letter || trial.correctAnswer;
+      container.appendChild(letter);
+      return;
+    }
     if (kind === "astigmatism") {
       const dial = document.createElement("div");
       dial.className = "exam-review__dial";

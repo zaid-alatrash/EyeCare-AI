@@ -43,6 +43,7 @@
   function getTypeDetails(type) {
     const types = {
       vision: { short: "VA", label: "فحص حدة النظر" },
+      "letter-vision": { short: "LT", label: "اختبار تمييز الحروف" },
       "color-vision": { short: "CV", label: "فحص تمييز الألوان" },
       "contrast-sensitivity": { short: "CS", label: "فحص حساسية التباين" },
       astigmatism: { short: "AS", label: "فحص الاستجماتيزم" },
@@ -138,6 +139,24 @@
         ["تاريخ الحفظ", formatDate(record.date)],
       ];
     }
+
+    if (record.type === "letter-vision") return [
+      ["العين اليمنى", record.resultData.rightEye || "غير متاح"],
+      ["دقة العين اليمنى", Number.isFinite(record.resultData.rightAccuracy) ? `${record.resultData.rightAccuracy}%` : "غير متاح في السجل القديم"],
+      ["أعلى مستوى مكتمل — اليمنى", record.resultData.rightHighestLevel || "غير متاح في السجل القديم"],
+      ["مستويات العين اليمنى", record.resultData.rightLevelPerformance || "غير متاح"],
+      ["العين اليسرى", record.resultData.leftEye || "غير متاح"],
+      ["دقة العين اليسرى", Number.isFinite(record.resultData.leftAccuracy) ? `${record.resultData.leftAccuracy}%` : "غير متاح في السجل القديم"],
+      ["أعلى مستوى مكتمل — اليسرى", record.resultData.leftHighestLevel || "غير متاح في السجل القديم"],
+      ["مستويات العين اليسرى", record.resultData.leftLevelPerformance || "غير متاح"],
+      ["طريقة الإجابة", record.resultData.inputMethods || "غير متاح"],
+      ["إجمالي الأسئلة", String(record.resultData.questionCount ?? "غير متاح")],
+      ["الإجابات الصحيحة", String(record.resultData.correct ?? "غير متاح")],
+      ["الإجابات غير الصحيحة", String(record.resultData.incorrect ?? "غير متاح")],
+      ["الأداء حسب المستوى", record.resultData.levelPerformance || "غير متاح"],
+      ["التفسير", record.resultData.interpretation || "غير متاح"],
+      ["تاريخ الحفظ", formatDate(record.date)],
+    ];
 
     if (record.type === "color-vision") return [
       ["النتيجة", String(record.resultData.score ?? "غير متاح")],
