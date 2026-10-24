@@ -1,5 +1,6 @@
 .codex-staging/
 tmp/
+output/
 debug.log
 *.log
 

@@ -1,0 +1,14 @@
+# Also exclude private/generated material if the existing Pages source uses Jekyll.
+exclude:
+  - tests
+  - output
+  - tmp
+  - .codex-staging
+  - ml
+  - debug.log
+  - README.md
+  - .env
+  - .env.example
+  - node_modules
+  - venv
+  - .venv

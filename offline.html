@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#009BCB">
+  <title>غير متصل | EyeCare AI</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; padding: 2rem; font-family: system-ui, sans-serif; line-height: 1.8; }
+    main { max-width: 38rem; margin: 12vh auto; }
+    a { color: #009BCB; }
+  </style>
+</head>
+<body>
+  <main>
+    <p>EyeCare AI</p>
+    <h1>هذه الصفحة تحتاج إلى اتصال</h1>
+    <p>تعذّر تحميل الصفحة الآن. تحقّق من اتصال الإنترنت ثم أعد المحاولة. قد تتوفر الصفحات العامة التي زرتها سابقًا دون اتصال.</p>
+    <p>الكاميرا والصوت والتحليل والتقارير قد تحتاج إلى الإنترنت. لا تعني إتاحة الصفحة أن الفحص يعمل دون اتصال.</p>
+    <a href="./index.html" id="home">العودة إلى الرئيسية</a>
+  </main>
+  <script>
+    // The fallback can be returned for a nested URL; resolve the link from SW scope.
+    if ("serviceWorker" in navigator) navigator.serviceWorker.getRegistration().then((registration) => {
+      if (registration) document.getElementById("home").href = new URL("index.html", registration.scope).href;
+    }).catch(() => {});
+  </script>
+</body>
+</html>

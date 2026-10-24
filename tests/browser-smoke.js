@@ -64,7 +64,10 @@ const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, mill
 
   async function evaluate(expression) {
     const result = await client.send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true });
-    if (result.exceptionDetails) throw new Error(result.exceptionDetails.text);
+    if (result.exceptionDetails) {
+      const description = result.exceptionDetails.exception?.description || result.exceptionDetails.text;
+      throw new Error(description);
+    }
     return result.result.value;
   }
 
